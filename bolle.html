@@ -28,6 +28,14 @@
             var ball1 = new $.gameQuery.Animation({imageURL: "red_ball.png"});
             $("#ball").addSprite("ball1", {animation: ball1, width: 50, height: 50, posy: PLAYGROUND_HEIGHT - 75, posx: PLAYGROUND_WIDTH/2 - 12});
 
+            var smaragds = [500, 1000, 2000, 3000];
+            var smaragdAnimation = new $.gameQuery.Animation({imageURL: "smaragd.png"});
+            for(var i in smaragds){
+                var xpos = smaragds[i];
+                $("#ground").addSprite("smaragd_" + xpos, {animation: smaragdAnimation, width: 32, height: 32, posy: PLAYGROUND_HEIGHT - 150, posx: xpos});
+                $("#smaragd_" + xpos).addClass("smaragd");
+            }
+
             var balle = new function(){
                 this.x = 0;
                 this.offsetX = function(){
@@ -76,10 +84,20 @@
                   balle.x += balle.offsetX();
                   if(balle.x<0)balle.x=0;
                   $("#background1").css("left", -balle.x);
-                  $("#ground1").css("left", -balle.x*4);
+                  $("#ground").css("left", -balle.x*4);
+                  generateEnemies();
               }
             };
+            var generateEnemies = function(){
+              //TODO  
+            };
+            var smaragdCollisionDetection = function(){
+              $("#ball1").collision(".smaragd").each(function(){
+                 $(this).hide(); 
+              });
+            };
             playground.registerCallback(moveLayers, 30);
+            playground.registerCallback(smaragdCollisionDetection, 30);
             playground.startGame();
         });
 

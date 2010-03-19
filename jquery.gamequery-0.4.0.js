@@ -674,7 +674,8 @@
             } else {
                 // we must find all the element that touches 'this'
                 var elementsToCheck = new Array();
-                elementsToCheck.push($.gameQuery.sceengraph.children(filter).get());
+                elementsToCheck.push($.gameQuery.sceengraph.find(filter).get());
+//                elementsToCheck.push($.gameQuery.sceengraph.children(filter).get()); //thuhtane, changed children to find
                 elementsToCheck[0].offsetX = 0;
                 elementsToCheck[0].offsetY = 0;
                 

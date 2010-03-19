@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Bolle - pompi maaliin!</title>
+    <script type="text/javascript" src="jquery-1.4.2.js"></script>
+    <script type="text/javascript" src="jquery.easing.1.3.js"></script>
+    <script type="text/javascript" src="jquery.gamequery-0.4.0.js"></script>
+    <script type="text/javascript" src="bolle.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            var PLAYGROUND_HEIGHT = 250;
+            var PLAYGROUND_WIDTH = 700;
+
+            var playground = $("#playground").playground({height: PLAYGROUND_HEIGHT, width: PLAYGROUND_WIDTH});
+            playground.addGroup("background", {width: PLAYGROUND_WIDTH, height: PLAYGROUND_HEIGHT});
+            playground.addGroup("ground", {width: PLAYGROUND_WIDTH, height: PLAYGROUND_HEIGHT});
+            playground.addGroup("ball", {width: 50, height: 50});
+
+            var background1 = new $.gameQuery.Animation({imageURL: "cave-background.png", type: 1});
+            $("#background").addSprite("background1", {animation: background1, width: PLAYGROUND_WIDTH*10, height: 250});
+
+            var ground1 = new $.gameQuery.Animation({imageURL: "cave-ground.png", type: 1});
+            $("#ground").addSprite("ground1", {animation: ground1, width: PLAYGROUND_WIDTH*30, height: 50, posy: PLAYGROUND_HEIGHT - 50});
+
+            var ball1 = new $.gameQuery.Animation({imageURL: "red_ball.png"});
+            $("#ball").addSprite("ball1", {animation: ball1, width: 50, height: 50, posy: PLAYGROUND_HEIGHT - 75, posx: PLAYGROUND_WIDTH/2 - 12});
+            
+            var balle = new function(){
+                this.x = 0;
+                this.offsetX = 0;
+                this.moveLeft = function(){
+                    this.offsetX += 1;
+                };
+                this.moveRight = function(){
+                    this.offsetX -= 1;
+                };
+            };
+
+            $(document).keydown(function(e){
+              switch(e.keyCode){
+                case 37: //this is left! (a)
+                  balle.moveLeft();
+                  break;
+                case 39: //this is right (d)
+                  balle.moveRight();
+                  break;
+              }
+            });
+            $(document).keyup(function(e){
+              switch(e.keyCode){
+                case 37: //this is left! (a)
+                  balle.moveRight();
+                  break;
+                case 39: //this is right (d)
+                  balle.moveLeft();
+                  break;
+              }
+            });
+            var moveLayers = function(){
+              if(balle.offsetX!=0){
+                  balle.x += balle.offsetX;
+                  if(balle.x>0)balle.x=0;
+                  $("#background1").css("left", balle.x);
+                  $("#ground1").css("left", balle.x*3);
+              }
+            };
+            playground.registerCallback(moveLayers, 30);
+            playground.startGame();
+        });
+
+
+    </script>
+</head>
+<body>
+<div id="playground"></div>
+<!--<div id="debugconsol" style="position: absolute; bottom: 5px; width: 600px; height: 100px; background: #ddd; overflow: auto;"></div></body>-->
+</body>
+</html>

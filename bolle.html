@@ -37,6 +37,11 @@
                 this.moveRight = function(){
                     this.offsetX -= 1;
                 };
+                this.jump = function(){
+                    $("#ball").animate({top: "-=150"}, 1000, "easeOutCirc", function(){
+                        $("#ball").animate({top: "+=150"}, 1000, "easeInCirc")
+                    })
+                }
             };
 
             $(document).keydown(function(e){
@@ -56,6 +61,9 @@
                   break;
                 case 39: //this is right (d)
                   balle.moveLeft();
+                  break;
+                case 32: //space
+                  balle.jump();
                   break;
               }
             });

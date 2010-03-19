@@ -27,17 +27,15 @@
 
             var ball1 = new $.gameQuery.Animation({imageURL: "red_ball.png"});
             $("#ball").addSprite("ball1", {animation: ball1, width: 50, height: 50, posy: PLAYGROUND_HEIGHT - 75, posx: PLAYGROUND_WIDTH/2 - 12});
-            
+
             var balle = new function(){
                 this.x = 0;
-                this.offsetX = 0;
+                this.offsetX = function(){
+                    return balle.movingLeft ? -1 : balle.movingRight ? 1 : 0;
+                };
                 this.onTheFloor = true;
-                this.moveLeft = function(){
-                    this.offsetX -= 1;
-                };
-                this.moveRight = function(){
-                    this.offsetX += 1;
-                };
+                this.movingLeft = false;
+                this.movingRight = false;
                 this.jump = function(){
                     if(this.onTheFloor){
                         this.onTheFloor = false;
@@ -53,20 +51,20 @@
             $(document).keydown(function(e){
               switch(e.keyCode){
                 case 37: //this is left! (a)
-                  balle.moveLeft();
+                  balle.movingLeft = true;
                   break;
                 case 39: //this is right (d)
-                  balle.moveRight();
+                    balle.movingRight = true;
                   break;
               }
             });
             $(document).keyup(function(e){
               switch(e.keyCode){
                 case 37: //this is left! (a)
-                  balle.moveRight();
+                    balle.movingLeft = false;
                   break;
                 case 39: //this is right (d)
-                  balle.moveLeft();
+                    balle.movingRight = false;
                   break;
                 case 32: //space
                   balle.jump();
@@ -74,11 +72,11 @@
               }
             });
             var moveLayers = function(){
-              if(balle.offsetX!=0){
-                  balle.x += balle.offsetX;
+              if(balle.offsetX()!=0){
+                  balle.x += balle.offsetX();
                   if(balle.x<0)balle.x=0;
                   $("#background1").css("left", -balle.x);
-                  $("#ground1").css("left", -balle.x*3);
+                  $("#ground1").css("left", -balle.x*4);
               }
             };
             playground.registerCallback(moveLayers, 30);

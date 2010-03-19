@@ -33,10 +33,10 @@
                 this.offsetX = 0;
                 this.onTheFloor = true;
                 this.moveLeft = function(){
-                    this.offsetX += 1;
+                    this.offsetX -= 1;
                 };
                 this.moveRight = function(){
-                    this.offsetX -= 1;
+                    this.offsetX += 1;
                 };
                 this.jump = function(){
                     if(this.onTheFloor){
@@ -76,9 +76,9 @@
             var moveLayers = function(){
               if(balle.offsetX!=0){
                   balle.x += balle.offsetX;
-                  if(balle.x>0)balle.x=0;
-                  $("#background1").css("left", balle.x);
-                  $("#ground1").css("left", balle.x*3);
+                  if(balle.x<0)balle.x=0;
+                  $("#background1").css("left", -balle.x);
+                  $("#ground1").css("left", -balle.x*3);
               }
             };
             playground.registerCallback(moveLayers, 30);

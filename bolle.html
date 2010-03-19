@@ -31,6 +31,7 @@
             var balle = new function(){
                 this.x = 0;
                 this.offsetX = 0;
+                this.onTheFloor = true;
                 this.moveLeft = function(){
                     this.offsetX += 1;
                 };
@@ -38,9 +39,14 @@
                     this.offsetX -= 1;
                 };
                 this.jump = function(){
-                    $("#ball").animate({top: "-=150"}, 1000, "easeOutCirc", function(){
-                        $("#ball").animate({top: "+=150"}, 1000, "easeInCirc")
-                    })
+                    if(this.onTheFloor){
+                        this.onTheFloor = false;
+                        $("#ball").animate({top: "-=150"}, 1000, "easeOutCirc", function(){
+                            $("#ball").animate({top: "+=150"}, 1000, "easeInCirc", function(){
+                                balle.onTheFloor = true;
+                            })
+                        })
+                    }
                 }
             };
 

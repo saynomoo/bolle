@@ -8,6 +8,7 @@
     <script type="text/javascript" src="jquery-1.4.2.js"></script>
     <script type="text/javascript" src="jquery.easing.1.3.js"></script>
     <script type="text/javascript" src="jquery.gamequery-0.4.0.js"></script>
+    <script type="text/javascript" src="jquery.collisioncheck-1.1.min.js"></script>
     <script type="text/javascript" src="bolle.js"></script>
     <script type="text/javascript">
         $(function(){
@@ -92,7 +93,7 @@
               //TODO  
             };
             var smaragdCollisionDetection = function(){
-              $("#ball1").collision(".smaragd").each(function(){
+              $("#ball1").collidesWith(".smaragd").each(function(){
                  $(this).hide(); 
               });
             };

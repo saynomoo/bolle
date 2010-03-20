@@ -31,7 +31,7 @@
             $("#ball").addSprite("ball1", {animation: ball1, width: 50, height: 50, posy: PLAYGROUND_HEIGHT - 75, posx: PLAYGROUND_WIDTH/2 - 12});
 
             var foreground1 = new $.gameQuery.Animation({imageURL: "rocks.png", type: 1});
-            $("#foreground").addSprite("foreground1", {animation: foreground1, width: PLAYGROUND_WIDTH*90, height: 25, posy: PLAYGROUND_HEIGHT - 25});
+            $("#foreground").addSprite("foreground1", {animation: foreground1, width: PLAYGROUND_WIDTH*2, height: 25, posy: PLAYGROUND_HEIGHT - 25});
 
             var smaragds = [500, 1000, 2000, 3000];
             var smaragdAnimation = new $.gameQuery.Animation({imageURL: "smaragd.png"});
@@ -90,7 +90,7 @@
                   if(balle.x<0)balle.x=0;
                   $("#background").css("left", -balle.x);
                   $("#ground").css("left", -balle.x*3);
-                  $("#foreground").css("left", -balle.x*9);
+                  $("#foreground").css("left", -balle.x*9 % PLAYGROUND_WIDTH);
                   generateEnemies();
               }
             };

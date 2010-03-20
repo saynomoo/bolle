@@ -18,6 +18,7 @@
             var playground = $("#playground").playground({height: PLAYGROUND_HEIGHT, width: PLAYGROUND_WIDTH});
             playground.addGroup("background", {width: PLAYGROUND_WIDTH, height: PLAYGROUND_HEIGHT});
             playground.addGroup("ground", {width: PLAYGROUND_WIDTH, height: PLAYGROUND_HEIGHT});
+            playground.addGroup("foreground", {width: PLAYGROUND_WIDTH, height: PLAYGROUND_HEIGHT});
             playground.addGroup("ball", {width: 50, height: 50});
 
             var background1 = new $.gameQuery.Animation({imageURL: "cave-background.png", type: 1});
@@ -28,6 +29,9 @@
 
             var ball1 = new $.gameQuery.Animation({imageURL: "red_ball.png"});
             $("#ball").addSprite("ball1", {animation: ball1, width: 50, height: 50, posy: PLAYGROUND_HEIGHT - 75, posx: PLAYGROUND_WIDTH/2 - 12});
+
+            var foreground1 = new $.gameQuery.Animation({imageURL: "rocks.png", type: 1});
+            $("#foreground").addSprite("foreground1", {animation: foreground1, width: PLAYGROUND_WIDTH*90, height: 25, posy: PLAYGROUND_HEIGHT - 25});
 
             var smaragds = [500, 1000, 2000, 3000];
             var smaragdAnimation = new $.gameQuery.Animation({imageURL: "smaragd.png"});
@@ -84,8 +88,9 @@
               if(balle.offsetX()!=0){
                   balle.x += balle.offsetX();
                   if(balle.x<0)balle.x=0;
-                  $("#background1").css("left", -balle.x);
-                  $("#ground").css("left", -balle.x*4);
+                  $("#background").css("left", -balle.x);
+                  $("#ground").css("left", -balle.x*3);
+                  $("#foreground").css("left", -balle.x*9);
                   generateEnemies();
               }
             };

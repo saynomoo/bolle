@@ -33,12 +33,18 @@
             var foreground1 = new $.gameQuery.Animation({imageURL: "rocks.png", type: 1});
             $("#foreground").addSprite("foreground1", {animation: foreground1, width: PLAYGROUND_WIDTH*2, height: 25, posy: PLAYGROUND_HEIGHT - 25});
 
-            var smaragds = [500, 1000, 2000, 3000];
+            var smaragds = [500, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 9200, 9400, 9600, 9800];
             var smaragdAnimation = new $.gameQuery.Animation({imageURL: "smaragd.png"});
             for(var i in smaragds){
                 var xpos = smaragds[i];
                 $("#ground").addSprite("smaragd_" + xpos, {animation: smaragdAnimation, width: 32, height: 32, posy: PLAYGROUND_HEIGHT - 150, posx: xpos});
                 $("#smaragd_" + xpos).addClass("smaragd");
+            }
+            var bugAnimation = new $.gameQuery.Animation({imageURL: "bug.png"});
+            var bugs = [1350, 2350, 3350, 4350, 5000, 5500, 6000, 6500, 7000, 7500, 8000, 8500, 8900, 9300, 9700, 10000];
+            for(var b in bugs){
+                var bxpos = bugs[b];
+                $("#ground").addSprite("bug_" + bxpos, {animation: bugAnimation, width: 32, height: 32, posy: PLAYGROUND_HEIGHT - 64, posx: bxpos});
             }
 
             var balle = new function(){

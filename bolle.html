@@ -41,10 +41,11 @@
                 $("#smaragd_" + xpos).addClass("smaragd");
             }
             var bugAnimation = new $.gameQuery.Animation({imageURL: "bug.png"});
-            var bugs = [1350, 2350, 3350, 4350, 5000, 5500, 6000, 6500, 7000, 7500, 8000, 8500, 8900, 9300, 9700, 10000];
+            var bugs = [730, 1350, 2350, 3350, 4350, 5000, 5500, 6000, 6500, 7000, 7500, 8000, 8500, 8900, 9300, 9700, 10000];
             for(var b in bugs){
                 var bxpos = bugs[b];
                 $("#ground").addSprite("bug_" + bxpos, {animation: bugAnimation, width: 32, height: 32, posy: PLAYGROUND_HEIGHT - 64, posx: bxpos});
+                $("#bug_" + bxpos).addClass("bug");
             }
 
             var balle = new function(){
@@ -91,25 +92,37 @@
               }
             });
             var moveLayers = function(){
-              if(balle.offsetX()!=0){
-                  balle.x += balle.offsetX();
-                  if(balle.x<0)balle.x=0;
-                  $("#background").css("left", -balle.x);
-                  $("#ground").css("left", -balle.x*3);
-                  $("#foreground").css("left", -balle.x*9 % PLAYGROUND_WIDTH);
-                  generateEnemies();
-              }
-            };
-            var generateEnemies = function(){
-              //TODO  
+                balle.x += balle.offsetX();
+                if(balle.x<0)balle.x=0;
+                $("#background").css("left", -balle.x);
+                $("#ground").css("left", -balle.x*3);
+                $("#foreground").css("left", -balle.x*9 % PLAYGROUND_WIDTH);
             };
             var smaragdCollisionDetection = function(){
               $("#ball1").collidesWith("#ground .smaragd").each(function(){
-                 $(this).hide(); 
+                  $(this).hide();
               });
             };
-            playground.registerCallback(moveLayers, 30);
-            playground.registerCallback(smaragdCollisionDetection, 30);
+            var moveBugs = function(){
+              $("#playground").collidesWith("#ground .bug").each(function(){
+                  var ele = $(this);
+                  ele.css("left", parseFloat(ele.css("left"))-2.5);
+              })
+            };
+            var bugCollisionDetection = function(){
+                $("#ball1").collidesWith("#ground .bug").each(function(){
+                    $(this).hide();
+                });
+            };
+            var advanceTheWorld = function(){
+                if(balle.offsetX()!=0){
+                    moveLayers();
+                }
+                smaragdCollisionDetection();
+                moveBugs();
+                bugCollisionDetection();
+            };
+            playground.registerCallback(advanceTheWorld, 30);
             playground.startGame();
         });
 

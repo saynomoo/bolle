@@ -34,7 +34,7 @@
             $("#foreground").addSprite("foreground1", {animation: foreground1, width: PLAYGROUND_WIDTH*2, height: 25, posy: PLAYGROUND_HEIGHT - 25});
 
             var smaragds = [500, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 9200, 9400, 9600, 9800];
-            var smaragdAnimation = new $.gameQuery.Animation({imageURL: "smaragd.png"});
+            var smaragdAnimation = new $.gameQuery.Animation({imageURL: "smaragd_bling.png", numberOfFrame: 6, delta: 32, rate: 200, type: 1});
             for(var i in smaragds){
                 var xpos = smaragds[i];
                 $("#ground").addSprite("smaragd_" + xpos, {animation: smaragdAnimation, width: 32, height: 32, posy: PLAYGROUND_HEIGHT - 150, posx: xpos});

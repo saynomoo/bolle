@@ -123,14 +123,48 @@
                 bugCollisionDetection();
             };
             playground.registerCallback(advanceTheWorld, 30);
-            playground.startGame();
+            $().setLoadBar("loadingBar", 400);
+
+            $("#startbutton").click(function(){
+                $.playground().startGame(function(){
+                    $("#welcomeScreen").fadeTo(1000,0,function(){$(this).remove();});
+                });
+            })
         });
 
 
     </script>
 </head>
 <body>
-<div id="playground"></div>
+<style>
+    #welcomeScreen{
+        padding: 10px;
+        width: 700px;
+        height: 250px;
+        position: absolute;
+        z-index: 100;
+        color: white;
+        font-family: sans-serif;
+    }
+    #startbutton{
+        font-size: 32px;
+    }
+</style>
+<div id="playground" style="width: 700px; height: 250px; background: black;">
+		<div id="welcomeScreen">
+            Pompi ja vieri pallolla! Poimi smaragdit ja väistä teräviä esineitä!!!
+            <div>
+                Ohjaus: <br />
+                &#8592; ja &#8594; näppäimet liikuttaa palloa. <br />
+                välilyönti pompauttaa pallon ilmaan.
+            </div>
+			<div style="position: absolute; top: 120px; width: 700px; color: white;">
+				<div id="loadingBar" style="position: relative; left: 100px; height: 15px; width: 0; background: red;"></div><br />
+				<center><a style="cursor: pointer;" id="startbutton">Aloita tästä!</a></center>
+			</div>
+
+		</div>
+	</div>
 <!--<div id="debugconsol" style="position: absolute; bottom: 5px; width: 600px; height: 100px; background: #ddd; overflow: auto;"></div></body>-->
 </body>
 </html>

@@ -28,6 +28,7 @@
             $("#ground").addSprite("ground1", {animation: ground1, width: PLAYGROUND_WIDTH*30, height: 50, posy: PLAYGROUND_HEIGHT - 50});
 
             var ball1 = new $.gameQuery.Animation({imageURL: "red_ball.png"});
+            var ball_collapse_animation = new $.gameQuery.Animation({imageURL: "ball_collapse.png", numberOfFrame: 8, delta: 50, rate: 100, type: 5});
             $("#ball").addSprite("ball1", {animation: ball1, width: 50, height: 50, posy: PLAYGROUND_HEIGHT - 75, posx: PLAYGROUND_WIDTH/2 - 12});
 
             var foreground1 = new $.gameQuery.Animation({imageURL: "rocks.png", type: 1});
@@ -112,7 +113,7 @@
             }
             function bugCollisionDetection(){
                 $("#ball1").collidesWith("#ground .bug").each(function(){
-                    $(this).hide();
+                    $("#ball1").setAnimation(ball_collapse_animation);
                 });
             }
             function currentPoints(){

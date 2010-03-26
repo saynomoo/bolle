@@ -112,9 +112,10 @@
               })
             }
             function bugCollisionDetection(){
-                $("#ball1").collidesWith("#ground .bug").each(function(){
+                if($("#ball1").collidesWith("#ground .bug").length>0){
                     $("#ball1").setAnimation(ball_collapse_animation);
-                });
+                    clearInterval(worldInterval);
+                }
             }
             function currentPoints(){
                 return originalSmaragdCount - $(".smaragd").length;
@@ -138,7 +139,7 @@
                 bugCollisionDetection();
                 updatePoints();
             }
-            playground.registerCallback(advanceTheWorld, 30);
+            var worldInterval = setInterval(advanceTheWorld, 30);
             $().setLoadBar("loadingBar", 400);
 
             $("#startbutton").click(function(){

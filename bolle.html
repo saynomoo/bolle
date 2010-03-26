@@ -40,6 +40,7 @@
                 $("#ground").addSprite("smaragd_" + xpos, {animation: smaragdAnimation, width: 32, height: 32, posy: PLAYGROUND_HEIGHT - 150, posx: xpos});
                 $("#smaragd_" + xpos).addClass("smaragd");
             }
+            var originalSmaragdCount = $(".smaragd").length;
             var bugAnimation = new $.gameQuery.Animation({imageURL: "auto.png", numberOfFrame: 8, delta: 32, rate: 100, type: 1});
             var bugs = [730, 1350, 2350, 3150, 3900, 4600, 5100, 5600, 6000];
             for(var b in bugs){
@@ -91,37 +92,51 @@
                   break;
               }
             });
-            var moveLayers = function(){
+            function moveLayers(){
                 balle.x += balle.offsetX();
                 if(balle.x<0)balle.x=0;
                 $("#background").css("left", -balle.x);
                 $("#ground").css("left", -balle.x*3);
                 $("#foreground").css("left", -balle.x*9 % PLAYGROUND_WIDTH);
-            };
-            var smaragdCollisionDetection = function(){
+            }
+            function smaragdCollisionDetection(){
               $("#ball1").collidesWith("#ground .smaragd").each(function(){
-                  $(this).hide();
+                  $(this).remove();
               });
-            };
-            var moveBugs = function(){
+            }
+            function moveBugs(){
               $("#playground").collidesWith("#ground .bug").each(function(){
                   var ele = $(this);
                   ele.css("left", parseFloat(ele.css("left"))-2.5);
               })
-            };
-            var bugCollisionDetection = function(){
+            }
+            function bugCollisionDetection(){
                 $("#ball1").collidesWith("#ground .bug").each(function(){
                     $(this).hide();
                 });
-            };
-            var advanceTheWorld = function(){
+            }
+            function currentPoints(){
+                return originalSmaragdCount - $(".smaragd").length;
+            }
+            function updatePoints(){
+                var oldPoints = $("#points").html();
+                var newPoints = currentPoints();
+                if(oldPoints!=newPoints){
+                   $("#points").animate({"font-size": "64px"}, 100, function(){
+                       $("#points").html(newPoints);
+                       $("#points").animate({"font-size": "32px"}, 100);
+                   });
+                }
+            }
+            function advanceTheWorld(){
                 if(balle.offsetX()!=0){
                     moveLayers();
                 }
                 smaragdCollisionDetection();
                 moveBugs();
                 bugCollisionDetection();
-            };
+                updatePoints();
+            }
             playground.registerCallback(advanceTheWorld, 30);
             $().setLoadBar("loadingBar", 400);
 
@@ -149,6 +164,15 @@
     #startbutton{
         font-size: 32px;
     }
+    #points{
+        color: green;
+        float: right;
+        padding: 5px;
+        font-size: 32px;
+        position: absolute;
+        right: 0;
+        z-index: 2;
+    }
 </style>
 <div id="playground" style="width: 700px; height: 250px; background: black;">
 		<div id="welcomeScreen">
@@ -164,6 +188,7 @@
 			</div>
 
 		</div>
+        <div id="points">0</div>
 	</div>
 <!--<div id="debugconsol" style="position: absolute; bottom: 5px; width: 600px; height: 100px; background: #ddd; overflow: auto;"></div></body>-->
 </body>

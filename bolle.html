@@ -69,29 +69,34 @@
                     }
                 }
             };
-
+            var keyDownActions = function(e){
+                switch(e.keyCode){
+                  case 37: //this is left! (a)
+                    balle.movingLeft = true;
+                    break;
+                  case 39: //this is right (d)
+                      balle.movingRight = true;
+                    break;
+                }
+            };
+            var keyUpActions = function(e){
+                switch(e.keyCode){
+                  case 37: //this is left! (a)
+                      balle.movingLeft = false;
+                    break;
+                  case 39: //this is right (d)
+                      balle.movingRight = false;
+                    break;
+                  case 32: //space
+                    balle.jump();
+                    break;
+                }
+            };
             $(document).keydown(function(e){
-              switch(e.keyCode){
-                case 37: //this is left! (a)
-                  balle.movingLeft = true;
-                  break;
-                case 39: //this is right (d)
-                    balle.movingRight = true;
-                  break;
-              }
+                keyDownActions(e);
             });
             $(document).keyup(function(e){
-              switch(e.keyCode){
-                case 37: //this is left! (a)
-                    balle.movingLeft = false;
-                  break;
-                case 39: //this is right (d)
-                    balle.movingRight = false;
-                  break;
-                case 32: //space
-                  balle.jump();
-                  break;
-              }
+                keyUpActions(e);
             });
             function moveLayers(){
                 balle.x += balle.offsetX();
@@ -114,7 +119,7 @@
             function bugCollisionDetection(){
                 if($("#ball1").collidesWith("#ground .bug").length>0){
                     $("#ball1").setAnimation(ball_collapse_animation);
-                    clearInterval(worldInterval);
+                    stopGame();
                 }
             }
             function currentPoints(){
@@ -139,12 +144,20 @@
                 bugCollisionDetection();
                 updatePoints();
             }
-            var worldInterval = setInterval(advanceTheWorld, 30);
+            function stopGame(){
+                clearInterval(worldInterval);
+                keyDownActions = function(){};
+                keyUpActions = function(){};
+                $("#endResult").html(currentPoints());
+                $("#endScreen").fadeTo(1000,1);
+            }
+            var worldInterval;
             $().setLoadBar("loadingBar", 400);
 
             $("#startbutton").click(function(){
                 $.playground().startGame(function(){
-                    $("#welcomeScreen").fadeTo(1000,0,function(){$(this).remove();});
+                    $("#welcomeScreen").fadeTo(1000,0,function(){$(this).hide();});
+                    worldInterval = setInterval(advanceTheWorld, 30);
                 });
             })
         });
@@ -154,7 +167,7 @@
 </head>
 <body>
 <style>
-    #welcomeScreen{
+    #welcomeScreen, #endScreen{
         padding: 10px;
         width: 700px;
         height: 250px;
@@ -162,6 +175,14 @@
         z-index: 100;
         color: white;
         font-family: sans-serif;
+    }
+    #endScreen{
+        font-size: 32px;
+        display: none;
+    }
+    #endResult{
+        font-size: 42px;
+        color: green;
     }
     #startbutton{
         font-size: 32px;
@@ -177,6 +198,7 @@
     }
 </style>
 <div id="playground" style="width: 700px; height: 250px; background: black;">
+        <div id="endScreen">Peli Loppui! Sait <span id="endResult"></span> pistettä ☺</div>
 		<div id="welcomeScreen">
             Pompi ja vieri pallolla! Poimi smaragdit ja väistä teräviä esineitä!!!
             <div>

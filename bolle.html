@@ -40,11 +40,11 @@
                 $("#ground").addSprite("smaragd_" + xpos, {animation: smaragdAnimation, width: 32, height: 32, posy: PLAYGROUND_HEIGHT - 150, posx: xpos});
                 $("#smaragd_" + xpos).addClass("smaragd");
             }
-            var bugAnimation = new $.gameQuery.Animation({imageURL: "bug.png"});
+            var bugAnimation = new $.gameQuery.Animation({imageURL: "auto.png", numberOfFrame: 8, delta: 32, rate: 100, type: 1});
             var bugs = [730, 1350, 2350, 3150, 3900, 4600, 5100, 5600, 6000];
             for(var b in bugs){
                 var bxpos = bugs[b];
-                $("#ground").addSprite("bug_" + bxpos, {animation: bugAnimation, width: 32, height: 32, posy: PLAYGROUND_HEIGHT - 64, posx: bxpos});
+                $("#ground").addSprite("bug_" + bxpos, {animation: bugAnimation, width: 42, height: 32, posy: PLAYGROUND_HEIGHT - 64, posx: bxpos});
                 $("#bug_" + bxpos).addClass("bug");
             }
 

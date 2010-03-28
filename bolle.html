@@ -34,6 +34,10 @@
             var foreground1 = new $.gameQuery.Animation({imageURL: "rocks.png", type: 1});
             $("#foreground").addSprite("foreground1", {animation: foreground1, width: PLAYGROUND_WIDTH*2, height: 25, posy: PLAYGROUND_HEIGHT - 25});
 
+            $("#ground").addSprite("arrow_right", {animation: new $.gameQuery.Animation({imageURL: "arrow_right.png"}), width: 150, height: 142, posy: PLAYGROUND_HEIGHT - 200, posx: 100});
+            $("#ground").addSprite("arrow_left", {animation: new $.gameQuery.Animation({imageURL: "arrow_left.png"}), width: 150, height: 142, posy: PLAYGROUND_HEIGHT - 200, posx: 6500});
+
+
             var smaragds = [500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000, 5500, 6000];
             var smaragdAnimation = new $.gameQuery.Animation({imageURL: "smaragd_bling.png", numberOfFrame: 6, delta: 32, rate: 200, type: 1});
             for(var i in smaragds){
@@ -107,6 +111,7 @@
             function moveLayers(){
                 balle.x += balle.offsetX();
                 if(balle.x<0)balle.x=0;
+                if(balle.x>2015)balle.x=2015;
                 $("#background").css("left", -balle.x);
                 $("#ground").css("left", -balle.x*3);
                 $("#foreground").css("left", -balle.x*9 % PLAYGROUND_WIDTH);

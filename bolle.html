@@ -194,6 +194,7 @@
                     $("#welcomeScreen").fadeTo(1000,0,function(){$(this).hide();});
                     worldInterval = setInterval(advanceTheWorld, 30);
                 });
+                return false;
             })
         });
 
@@ -231,9 +232,18 @@
         right: 0;
         z-index: 2;
     }
+    #playground{
+        width: 700px;
+        height: 250px;
+        background: black;
+    }
+    #playground .control_link{
+        text-align: center;
+        margin-top: 2em;
+    }
 </style>
-<div id="playground" style="width: 700px; height: 250px; background: black;">
-        <div id="endScreen"><span id="endReason">Peli Loppui!</span> Sait <span id="endResult"></span> pistettä ☺</div>
+<div id="playground">
+        <div id="endScreen"><span id="endReason">Peli Loppui!</span> Sait <span id="endResult"></span> pistettä ☺<div class="control_link"><a href="#" onclick="location.reload();">Pelaa uudelleen!</a></div></div>
 		<div id="welcomeScreen">
             Pompi ja vieri pallolla! Poimi smaragdit ja väistä piikittäjiä!!!
             <div>
@@ -242,9 +252,11 @@
                 Välilyönnillä pallo pomppaa.
             </div>
 			<div style="position: absolute; top: 120px; width: 700px; color: white;">
-				<div id="loadingBar" style="position: relative; left: 100px; height: 15px; width: 0; background: red;"></div><br />
-				<center><a style="cursor: pointer;" id="startbutton">Aloita tästä!</a></center>
-			</div>
+				<div id="loadingBar" style="position: relative; left: 100px; height: 15px; width: 0; background: red;"></div>
+                <div class="control_link">
+                    <a href="#" id="startbutton">Aloita tästä!</a>
+                </div>
+            </div>
 
 		</div>
         <div id="points">0</div>

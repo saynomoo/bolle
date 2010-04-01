@@ -59,16 +59,17 @@
                 $("#bug_" + bxpos).addClass("bug");
             }
             function Sound(src){
-                this.audio = new Audio(src);
+                new Audio(src).load();
                 this.play = function(){
                     try{
-                        this.audio.play();
+                        var a = new Audio(src);
+                        a.play();
                     }catch(error){}
                 }
             }
-            var beep = new Sound("./futurebeep.wav");
-            var blast = new Sound("./liquidblast.wav");
-            var boink = new Sound("./boink.wav");
+            var collect_smaragd = new Sound("./bell.ogg");
+            var blast = new Sound("./liquidblast.ogg");
+            var boink = new Sound("./boink.ogg");
             var balle = new function(){
                 this.x = 0;
                 this.offsetX = function(){
@@ -132,7 +133,7 @@
             }
             function smaragdCollisionDetection(){
               $("#ball1").collidesWith("#ground .smaragd").each(function(){
-                  beep.play();
+                  collect_smaragd.play();
                   $(this).remove();
               });
             }

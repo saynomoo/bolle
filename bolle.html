@@ -58,9 +58,17 @@
                 $("#ground").addSprite("bug_" + bxpos, {animation: bugAnimation, width: 42, height: 32, posy: PLAYGROUND_HEIGHT - 64, posx: bxpos});
                 $("#bug_" + bxpos).addClass("bug");
             }
-            var beep = new $.gameQuery.SoundWrapper("./futurebeep.wav", false);
-            var blast = new $.gameQuery.SoundWrapper("./liquidblast.wav", false);
-            var boink = new $.gameQuery.SoundWrapper("./boink.wav", false);
+            function Sound(src){
+                this.audio = new Audio(src);
+                this.play = function(){
+                    try{
+                        this.audio.play();
+                    }catch(error){}
+                }
+            }
+            var beep = new Sound("./futurebeep.wav");
+            var blast = new Sound("./liquidblast.wav");
+            var boink = new Sound("./boink.wav");
             var balle = new function(){
                 this.x = 0;
                 this.offsetX = function(){
